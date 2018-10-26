@@ -55,6 +55,8 @@
 				enableContextMenu: opt.enableContextMenu != null ? opt.enableContextMenu : false,
 				contextMenuItems: opt.contextMenuItems instanceof Array ? opt.contextMenuItems : [],
 				customDayRenderer : $.isFunction(opt.customDayRenderer) ? opt.customDayRenderer : null,
+				customOldDayRenderer : $.isFunction(opt.customOldDayRenderer) ? opt.customOldDayRenderer : null,
+				customNewDayRenderer : $.isFunction(opt.customNewDayRenderer) ? opt.customNewDayRenderer : null,
 				customDataSourceRenderer : $.isFunction(opt.customDataSourceRenderer) ? opt.customDataSourceRenderer : null,
 				weekStart: !isNaN(parseInt(opt.weekStart)) ? parseInt(opt.weekStart) : null
 			};
@@ -270,9 +272,15 @@
 						
 						if(currentDate < firstDate) {
 							cell.addClass('old');
+							if(this.options.customOldDayRenderer) {
+								this.options.customOldDayRenderer(cell, currentDate);
+							}
 						}
 						else if(currentDate > lastDate) {
 							cell.addClass('new');
+							if(this.options.customNewDayRenderer) {
+								this.options.customNewDayRenderer(cell, currentDate);
+							}
 						}
 						else {
 							if(this._isDisabled(currentDate)) {
