@@ -48,6 +48,7 @@
 				disabledDays: opt.disabledDays instanceof Array ? opt.disabledDays : [],
 				disabledWeekDays: opt.disabledWeekDays instanceof Array ? opt.disabledWeekDays : [],
 				hiddenWeekDays: opt.hiddenWeekDays instanceof Array ? opt.hiddenWeekDays : [],
+				alwaysSixWeeks: opt.alwaysSixWeeks != null ? opt.alwaysSixWeeks : false,
 				roundRangeLimits: opt.roundRangeLimits != null ? opt.roundRangeLimits : false,
 				dataSource: opt.dataSource instanceof Array ? opt.dataSource : [],
 				style: opt.style == 'background' || opt.style == 'border' || opt.style == 'custom' ? opt.style : 'border',
@@ -248,8 +249,7 @@
 					currentDate.setDate(currentDate.getDate() - 1);
 				}
 				
-				while(currentDate <= lastDate)
-				{
+				for(var i = 0; (i < 6 && this.options.alwaysSixWeeks) || currentDate <= lastDate; i++) {
 					var row = $(document.createElement('tr'));
 					
 					if(this.options.displayWeekNumber) {
