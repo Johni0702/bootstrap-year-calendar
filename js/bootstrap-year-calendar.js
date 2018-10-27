@@ -40,6 +40,7 @@
 				maxDate: opt.maxDate instanceof Date ? opt.maxDate : null,
 				language: (opt.language != null && dates[opt.language] != null) ? opt.language : 'en',
 				allowOverlap: opt.allowOverlap != null ? opt.allowOverlap : true,
+				maxColumns: !isNaN(parseInt(opt.maxColumns)) ? parseInt(opt.maxColumns) : 6,
 				displayWeekNumber: opt.displayWeekNumber != null ? opt.displayWeekNumber : false,
 				displayDisabledDataSource: opt.displayDisabledDataSource != null ? opt.displayDisabledDataSource : false,
 				displayHeader: opt.displayHeader != null ? opt.displayHeader : true,
@@ -625,16 +626,16 @@
 				var monthSize = $(_this.element).find('.month').first().width() + 10;
 				var monthContainerClass = 'month-container';
 				
-				if(monthSize * 6 < calendarSize) {
+				if(monthSize * 6 < calendarSize && _this.options.maxColumns >= 6) {
 					monthContainerClass += ' col-xs-2';
 				}
-				else if(monthSize * 4 < calendarSize) {
+				else if(monthSize * 4 < calendarSize && _this.options.maxColumns >= 4) {
 					monthContainerClass += ' col-xs-3';
 				}
-				else if(monthSize * 3 < calendarSize) {
+				else if(monthSize * 3 < calendarSize && _this.options.maxColumns >= 3) {
 					monthContainerClass += ' col-xs-4';
 				}
-				else if(monthSize * 2 < calendarSize) {
+				else if(monthSize * 2 < calendarSize && _this.options.maxColumns >= 2) {
 					monthContainerClass += ' col-xs-6';
 				}
 				else {
