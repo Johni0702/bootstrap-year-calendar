@@ -626,7 +626,7 @@
 			
 			/* Responsive management */
 			
-			setInterval(function() {
+			var update = function() {
 				var calendarSize = $(_this.element).width();
 				var monthSize = $(_this.element).find('.month').first().width() + 10;
 				var monthContainerClass = 'month-container';
@@ -648,7 +648,9 @@
 				}
 				
 				$(_this.element).find('.month-container').attr('class', monthContainerClass);
-			}, 300);
+			};
+			update()
+			setInterval(update, 300);
 		},
 		_refreshRange: function () {
 			var _this = this;
