@@ -53,6 +53,7 @@
 				roundRangeLimits: opt.roundRangeLimits != null ? opt.roundRangeLimits : false,
 				dataSource: opt.dataSource instanceof Array ? opt.dataSource : [],
 				style: opt.style == 'background' || opt.style == 'border' || opt.style == 'custom' ? opt.style : 'border',
+				fadeIn: opt.fadeIn != null ? opt.fadeIn : true,
 				enableContextMenu: opt.enableContextMenu != null ? opt.enableContextMenu : false,
 				contextMenuItems: opt.contextMenuItems instanceof Array ? opt.contextMenuItems : [],
 				customDayRenderer : $.isFunction(opt.customDayRenderer) ? opt.customDayRenderer : null,
@@ -95,7 +96,11 @@
 			this._renderDataSource();
 			
 			this._applyEvents();
-			this.element.find('.months-container').fadeIn(500);
+			if (this.options.fadeIn) {
+				this.element.find('.months-container').fadeIn(500);
+			} else {
+				this.element.find('.months-container').show();
+			}
 			
 			this._triggerEvent('renderEnd', { currentYear: this.options.startYear });
 		},
