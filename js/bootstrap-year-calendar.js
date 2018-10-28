@@ -527,8 +527,8 @@
 			
 			/* Range selection */
 			if(this.options.enableRangeSelection) {
-				cells.mousedown(function (e) {
-					if(e.which == 1) {
+				cells.on('mousedown touchstart', function (e) {
+					if(e.which == 1 || e.type === 'touchstart') {
 						var currentDate = _this._getDate($(this));
 					
 						if(_this.options.allowOverlap || _this.getEvents(currentDate).length == 0)
@@ -540,9 +540,20 @@
 					}
 				});
 
-				cells.mouseenter(function (e) {
+				cells.on('mouseenter touchmove', function (e) {
 					if (_this._mouseDown) {
-						var currentDate = _this._getDate($(this));
+						var element;
+						if (e.type === 'touchmove') {
+							var touch = e.changedTouches.item(0);
+							element = $(document.elementFromPoint(touch.clientX, touch.clientY))
+								.closest('.day:not(.old, .new, .disabled)');
+							if (element.length === 0) {
+								return;
+							}
+						} else {
+							element = $(this);
+						}
+						var currentDate = _this._getDate(element);
 						
 						if(!_this.options.allowOverlap)
 						{
@@ -585,7 +596,7 @@
 					}
 				});
 
-				$(window).mouseup(function (e) {
+				$(window).on('mouseup touchend', function (e) {
 					if (_this._mouseDown) {
 						_this._mouseDown = false;
 						_this._refreshRange();
