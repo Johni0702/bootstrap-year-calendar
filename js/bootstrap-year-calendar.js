@@ -21,6 +21,8 @@
 	var Calendar = function(element, options) {
 		this.element = element;
 		this.element.addClass('calendar');
+
+		this._lastValidMonthSize = 0
 		
 		this._initializeEvents(options);
 		this._initializeOptions(options);
@@ -640,6 +642,14 @@
 			var update = function() {
 				var calendarSize = $(_this.element).width();
 				var monthSize = $(_this.element).find('.month').first().width() + 10;
+				// Right after element creation, the month will still be 0px in width
+				// if that's the case, just assume it to not have changed compared to
+				// the last valid size
+				if (monthSize === 10) {
+					monthSize = _this._lastValidMonthSize
+				} else {
+					_this._lastValidMonthSize = monthSize
+				}
 				var monthContainerClass = 'month-container';
 				
 				if(monthSize * 6 < calendarSize && _this.options.maxColumns >= 6) {
